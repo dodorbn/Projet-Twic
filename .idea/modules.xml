@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Frontend/Frontend.iml" filepath="$PROJECT_DIR$/Frontend/Frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/twic-2025-s1-robineau-dorian.iml" filepath="$PROJECT_DIR$/.idea/twic-2025-s1-robineau-dorian.iml" />
     </modules>
   </component>
