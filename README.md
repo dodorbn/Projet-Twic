@@ -10,7 +10,7 @@ Ce serveur doit se connecter à la base de données *employees* fournie.
 
 Le serveur doit exposer les opérations CRUD pour les ressources `employee`, `salary` et `title`.
 
-À noter que les ressources `salary` et `title` sont dépendantes de la ressource `employee` auquelle elles sont attachées.
+À noter que les ressources `salary` et `title` sont dépendantes de la ressource `employee` auxquelles elles sont attachées.
 Ça se traduit par une arborescence des URLs du format `/employees/{empNo}/salaries/{fromDate}`.
 
 Astuce : penser à exposer le salaire actuel à l'URL `/employees/{empNo}/salaries/last`. Pareil pour le titre.
@@ -77,11 +77,11 @@ Lorsque les données sont pré-remplis suite à une action sur une des autres pa
 
 La page (ou onglet) présente aussi 3 boutons intitulés `Create`, `Modify`, `Delete`.
 
-Lorsque l'utilisateur appuie sur un bouton, l'action correspondante est executée.
+Lorsque l'utilisateur appuie sur un bouton, l'action correspondante est exécutée.
 
 ### 3. Annexe
 
-Une chaîne d'intégration continue avec Jenkins doit accompagnier le projet.
+Une chaîne d'intégration continue avec Jenkins doit accompagner le projet.
 
 La définition de la chaîne d'intégration continue doit être faite dans un fichier `Jenkinsfile` à la racine du projet.
 
@@ -91,7 +91,7 @@ Une analyse de qualimétrie avec SonarQube doit être faite lors de cette intég
 
 - code source du projet serveur
 - code source du projet client
-- fichier Jenkinsfile pour la chaîne d'intégration continue
+- fichier Jenkins file pour la chaîne d'intégration continue
 - fichier OpenAPI (en .json ou .yaml) décrivant l'API REST du serveur
 - fichier de log de l'exécution Jenkins
 - rapport de qualimétrie SonarQube (export ou capture d'écran)
