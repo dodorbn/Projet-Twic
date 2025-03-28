@@ -8,15 +8,11 @@
         <version>3.4.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.springframework.boot</groupId>
+    <groupId>org.example</groupId>
     <artifactId>backend-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
-        <module>
-            backend
-        </module>
+        <module>backend</module>
     </modules>
-    <packaging>
-        pom
-    </packaging>
+    <packaging>pom</packaging>
 </project>
