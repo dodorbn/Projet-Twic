@@ -1,4 +1,4 @@
-package eseo.fr.robineau.backend;
+package eseo.fr.robineau.backend.service;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;

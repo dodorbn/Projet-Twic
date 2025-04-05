@@ -1,4 +1,4 @@
-package eseo.fr.robineau.backend;
+package eseo.fr.robineau.backend.service;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
