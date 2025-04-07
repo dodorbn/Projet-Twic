@@ -1,8 +1,8 @@
-package eseo.fr.robineau.backend.service;
+package eseo.fr.robineau.backend.service.departement;
 
+import eseo.fr.robineau.backend.service.employee.Employee;
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -12,10 +12,23 @@ public class DeptManager {
     @EmbeddedId
     private DeptManagerId id;
 
+    @MapsId("empNo")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emp_no")
+    private Employee employees;
+
     @MapsId("deptNo")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_no")
     private Department department;
+
+    @NotNull
+    @Column(name = "from_date", nullable = false)
+    private LocalDate fromDate;
+
+    @NotNull
+    @Column(name = "to_date", nullable = false)
+    private LocalDate toDate;
 
     public DeptManagerId getId() {
         return id;

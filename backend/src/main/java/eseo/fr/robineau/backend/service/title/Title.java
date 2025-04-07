@@ -1,5 +1,6 @@
-package eseo.fr.robineau.backend.service;
+package eseo.fr.robineau.backend.service.title;
 
+import eseo.fr.robineau.backend.service.employee.Employee;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,7 +17,7 @@ public class Title {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "emp_no", nullable = false)
-    private Employee empNo;
+    private Employee employees;
 
     @Column(name = "title", nullable = false, length = 50)
     private String title;
@@ -32,12 +33,12 @@ public class Title {
         this.id = id;
     }
 
-    public Employee getEmpNo() {
-        return empNo;
+    public Employee getEmployees() {
+        return employees;
     }
 
-    public void setEmpNo(Employee empNo) {
-        this.empNo = empNo;
+    public void setEmployees(Employee employee) {
+        this.employees = employee;
     }
 
     public String getTitle() {

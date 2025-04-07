@@ -1,6 +1,8 @@
-package eseo.fr.robineau.backend.service;
+package eseo.fr.robineau.backend.service.salary;
 
+import eseo.fr.robineau.backend.service.employee.Employee;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -16,8 +18,9 @@ public class Salary {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "emp_no", nullable = false)
-    private Employee empNo;
+    private Employee employees;
 
+    @NotNull
     @Column(name = "salary", nullable = false)
     private Integer salary;
 
@@ -32,12 +35,12 @@ public class Salary {
         this.id = id;
     }
 
-    public Employee getEmpNo() {
-        return empNo;
+    public Employee getEmployees() {
+        return employees;
     }
 
-    public void setEmpNo(Employee empNo) {
-        this.empNo = empNo;
+    public void setEmployees(Employee employee) {
+        this.employees = employee;
     }
 
     public Integer getSalary() {

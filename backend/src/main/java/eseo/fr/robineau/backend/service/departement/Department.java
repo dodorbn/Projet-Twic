@@ -1,4 +1,4 @@
-package eseo.fr.robineau.backend.service;
+package eseo.fr.robineau.backend.service.departement;
 
 import jakarta.persistence.*;
 

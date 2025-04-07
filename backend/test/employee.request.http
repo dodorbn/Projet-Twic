@@ -1,0 +1,42 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+
+### Get all employees (paginated)
+GET http://localhost:8080/api/v1/employees?pageNo=1&pageSize=10
+
+### Get employees by last name
+GET http://localhost:8080/api/v1/employees?lastName=Smith&pageNo=1&pageSize=10
+
+### Get employee by ID
+GET http://localhost:8080/api/v1/employees/10001
+
+### Search employees
+GET http://localhost:8080/api/v1/employees/search?query=Facello
+
+### Create new employee
+POST http://localhost:8080/api/v1/employees
+Content-Type: application/json
+
+{
+  "id": 500000,
+  "firstName": "John",
+  "lastName": "Doe",
+  "birthDate": "1990-01-01",
+  "hireDate": "2020-01-01"
+}
+
+### Update employee
+PUT http://localhost:8080/api/v1/employees/500000
+Content-Type: application/json
+
+{
+  "firstName": "Dorian",
+  "lastName": "Robineau",
+  "birthDate": "2003-10-20",
+  "hireDate": "2020-01-01"
+}
+
+### Delete employee
+DELETE http://localhost:8080/api/v1/employees/500000

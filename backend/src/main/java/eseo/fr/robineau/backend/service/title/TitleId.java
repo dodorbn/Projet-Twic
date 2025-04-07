@@ -1,4 +1,4 @@
-package eseo.fr.robineau.backend.service;
+package eseo.fr.robineau.backend.service.title;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Embeddable
-public class SalaryId implements java.io.Serializable {
-    private static final long serialVersionUID = 2814772787990443220L;
+public class TitleId implements java.io.Serializable {
+    private static final long serialVersionUID = 5225184780150651241L;
     @Column(name = "emp_no", nullable = false)
     private Integer empNo;
 
@@ -36,7 +36,7 @@ public class SalaryId implements java.io.Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SalaryId entity = (SalaryId) o;
+        TitleId entity = (TitleId) o;
         return Objects.equals(this.fromDate, entity.fromDate) &&
                 Objects.equals(this.empNo, entity.empNo);
     }
