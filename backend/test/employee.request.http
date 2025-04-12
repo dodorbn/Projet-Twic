@@ -20,7 +20,7 @@ POST http://localhost:8080/api/v1/employees
 Content-Type: application/json
 
 {
-  "id": 500000,
+  "id": 500001,
   "firstName": "John",
   "lastName": "Doe",
   "birthDate": "1990-01-01",
@@ -28,15 +28,15 @@ Content-Type: application/json
 }
 
 ### Update employee
-PUT http://localhost:8080/api/v1/employees/500000
+PUT http://localhost:8080/api/v1/employees/500001
 Content-Type: application/json
 
 {
-  "firstName": "Dorian",
-  "lastName": "Robineau",
-  "birthDate": "2003-10-20",
-  "hireDate": "2020-01-01"
+  "firstName": "Cloe",
+  "lastName": "Mergey",
+  "birthDate": "2003-02-20",
+  "hireDate": "2018-01-01"
 }
 
 ### Delete employee
-DELETE http://localhost:8080/api/v1/employees/500000
+DELETE http://localhost:8080/api/v1/employees/500001
