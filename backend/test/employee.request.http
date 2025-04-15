@@ -1,8 +1,3 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=IntelliJ IDEA
-
-
 ### Get all employees (paginated)
 GET http://localhost:8080/api/v1/employees?pageNo=1&pageSize=10
 
@@ -14,6 +9,9 @@ GET http://localhost:8080/api/v1/employees/10001
 
 ### Search employees
 GET http://localhost:8080/api/v1/employees/search?query=Facello
+
+### Search employees by last name
+GET http://localhost:8080/api/v1/employees?lastName=Facello&pageNo=1&pageSize=10
 
 ### Create new employee
 POST http://localhost:8080/api/v1/employees

@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employees/{empNo}/salaries")
+@CrossOrigin(origins = "http://localhost:8081")
 public class SalaryController {
 //    private SalaryService salaryService;
 //    private EmployeeService employeeService;

@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employees/{id}/titles")
+@CrossOrigin(origins = "http://localhost:8081")
 public class TitleController {
 //    private final TitleService titleService;
 //    private final EmployeeService employeeService;

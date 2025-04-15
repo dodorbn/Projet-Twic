@@ -61,14 +61,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> searchEmployees(String query) {
-        Integer empNo = null;
-        try {
-            empNo = Integer.parseInt(query);
-        } catch (NumberFormatException ignored) {
-        }
+        System.out.println("Search query received: " + query);
 
-        return employeeRepository.findByIdOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(
-                empNo, query, query
-        );
+        try {
+            Integer empNo = Integer.parseInt(query);
+            // Si c'est un nombre, cherche par ID OU nom
+            return employeeRepository.findByIdOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(
+                    empNo, query, query
+            );
+        } catch (NumberFormatException e) {
+            // Si ce n’est pas un nombre, cherche uniquement par prénom/nom
+            return employeeRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(query, query);
+        }
     }
+
 }
