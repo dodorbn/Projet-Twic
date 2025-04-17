@@ -1,6 +1,7 @@
 package eseo.fr.robineau.backend.service.departement;
 
 import eseo.fr.robineau.backend.infrastructure.departement.DeptEmpRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,7 +21,8 @@ public class DeptEmpServiceImpl implements DeptEmpService {
     }
 
     @Override
-    public List<DeptEmp> getCurrentDeptEmp(String deptNo) {
-        return deptEmpRepository.findByDepartmentDeptNoAndToDateAfter(deptNo, LocalDate.now());
+    public List<DeptEmp> getCurrentDeptEmp(String deptNo, int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return deptEmpRepository.findByDepartmentDeptNoAndToDateAfter(deptNo, LocalDate.now(), pageRequest);
     }
 }

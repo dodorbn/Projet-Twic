@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, String> {
-  //Page<Department> findDepartmentsByDeptNameContainingIgnoreCase(String name, PageRequest pageable);
+    Department findByDeptName(String deptName);
 }

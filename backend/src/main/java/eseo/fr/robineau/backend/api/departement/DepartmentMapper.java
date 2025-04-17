@@ -1,9 +1,10 @@
 package eseo.fr.robineau.backend.api.departement;
 
-public interface DepartmentMapper {
+import eseo.fr.robineau.backend.api.departement.DepartmentDto;
+import eseo.fr.robineau.backend.service.departement.Department;
+import java.util.List;
 
-//  DepartmentDto toDto(Department department);
-//  List<DepartmentDto> toListDto(List<Department> listDepartement);
-//
-//  Department toEntity(DepartmentRequestDto departmentRequestDto);
+public interface DepartmentMapper {
+    DepartmentDto toDto(Department department);
+    List<DepartmentDto> toListDto(List<Department> departments);
 }

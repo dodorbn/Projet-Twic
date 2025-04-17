@@ -1,37 +1,41 @@
 package eseo.fr.robineau.backend.api.departement;
 
+import eseo.fr.robineau.backend.api.employee.EmployeeDto;
+import eseo.fr.robineau.backend.service.departement.Department;
+import eseo.fr.robineau.backend.service.departement.DeptManager;
+import eseo.fr.robineau.backend.api.employee.EmployeeMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DepartmentMapperImpl implements DepartmentMapper {
 
-//  @Override
-//  public DepartmentDto toDto(Department department) {
-//    if(department == null) {
-//      return null;
-//    }
-//    final String deptNo = department.getDeptNo();
-//    final String deptName = department.getDeptName();
-//    return new DepartmentDto(deptNo, deptName);
-//  }
-//
-//  @Override
-//  public List<DepartmentDto> toListDto(List<Department> listDepartement) {
-//    if (listDepartement == null) {
-//      return null;
-//    }
-//    List<DepartmentDto> result = new ArrayList<>();
-//    for (Department departement : listDepartement) {
-//      result.add(toDto(departement));
-//    }
-//    return result;
-//  }
-//
-//  @Override
-//  public Department toEntity(DepartmentRequestDto departmentRequestDto) {
-//    Department department = new Department();
-//    department.setDeptNo(departmentRequestDto.getDeptNo());
-//    department.setDeptName(departmentRequestDto.getDeptName());
-//    return department;
-//  }
+    private final EmployeeMapper employeeMapper;
+
+    public DepartmentMapperImpl(EmployeeMapper employeeMapper) {
+        this.employeeMapper = employeeMapper;
+    }
+
+    @Override
+    public DepartmentDto toDto(Department department) {
+        List<EmployeeDto> managerDtos = department.getDeptManagers().stream()
+                .map(DeptManager::getEmployees)
+                .map(employeeMapper::toDto)
+                .collect(Collectors.toList());
+
+        return new DepartmentDto(
+                department.getDeptNo(),
+                department.getDeptName(),
+                managerDtos // Ajout des managers
+        );
+    }
+
+    @Override
+    public List<DepartmentDto> toListDto(List<Department> departments) {
+        return departments.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
 }

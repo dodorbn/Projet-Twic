@@ -1,12 +1,20 @@
 package eseo.fr.robineau.backend.service.departement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "departments")
+@JsonIgnoreProperties({"deptEmps", "deptManagers"})
 public class Department {
     @Id
     @Column(name = "dept_no", nullable = false, length = 4)
@@ -21,35 +29,4 @@ public class Department {
     @OneToMany(mappedBy = "department")
     private Set<DeptManager> deptManagers = new LinkedHashSet<>();
 
-    public Set<DeptManager> getDeptManagers() {
-        return deptManagers;
-    }
-
-    public void setDeptManagers(Set<DeptManager> deptManagers) {
-        this.deptManagers = deptManagers;
-    }
-
-    public Set<DeptEmp> getDeptEmps() {
-        return deptEmps;
-    }
-
-    public void setDeptEmps(Set<DeptEmp> deptEmps) {
-        this.deptEmps = deptEmps;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public String getDeptNo() {
-        return deptNo;
-    }
-
-    public void setDeptNo(String deptNo) {
-        this.deptNo = deptNo;
-    }
 }

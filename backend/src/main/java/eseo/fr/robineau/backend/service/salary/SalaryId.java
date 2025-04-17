@@ -2,35 +2,25 @@ package eseo.fr.robineau.backend.service.salary;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
+import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Setter
+@Getter
 @Embeddable
 public class SalaryId implements java.io.Serializable {
+    @Serial
     private static final long serialVersionUID = 2814772787990443220L;
     @Column(name = "emp_no", nullable = false)
     private Integer empNo;
 
     @Column(name = "from_date", nullable = false)
     private LocalDate fromDate;
-
-    public Integer getEmpNo() {
-        return empNo;
-    }
-
-    public void setEmpNo(Integer empNo) {
-        this.empNo = empNo;
-    }
-
-    public LocalDate getFromDate() {
-        return fromDate;
-    }
-
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
-    }
 
     @Override
     public boolean equals(Object o) {

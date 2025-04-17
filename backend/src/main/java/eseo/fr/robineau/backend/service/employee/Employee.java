@@ -1,17 +1,26 @@
 package eseo.fr.robineau.backend.service.employee;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import eseo.fr.robineau.backend.service.salary.Salary;
 import eseo.fr.robineau.backend.service.title.Title;
 import eseo.fr.robineau.backend.service.departement.DeptEmp;
 import eseo.fr.robineau.backend.service.departement.DeptManager;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "employees")
+@JsonIgnoreProperties({"deptEmps", "deptManagers", "salaries", "titles"})
 public class Employee {
     @Id
     @Column(name = "emp_no", nullable = false)
@@ -30,86 +39,19 @@ public class Employee {
     private LocalDate hireDate;
 
     @OneToMany(mappedBy = "employees")
+    @JsonIgnore
     private Set<DeptEmp> deptEmps = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "employees")
+    @JsonIgnore
     private Set<DeptManager> deptManagers = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "employees")
+    @JsonIgnore
     private Set<Salary> salaries = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "employees")
+    @JsonIgnore
     private Set<Title> titles = new LinkedHashSet<>();
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDate getHireDate() {
-        return hireDate;
-    }
-
-    public void setHireDate(LocalDate hireDate) {
-        this.hireDate = hireDate;
-    }
-
-    public Set<Title> getTitles() {
-        return titles;
-    }
-
-    public void setTitles(Set<Title> titles) {
-        this.titles = titles;
-    }
-
-    public Set<Salary> getSalaries() {
-        return salaries;
-    }
-
-    public void setSalaries(Set<Salary> salaries) {
-        this.salaries = salaries;
-    }
-
-    public Set<DeptManager> getDeptManagers() {
-        return deptManagers;
-    }
-
-    public void setDeptManagers(Set<DeptManager> deptManagers) {
-        this.deptManagers = deptManagers;
-    }
-
-    public Set<DeptEmp> getDeptEmps() {
-        return deptEmps;
-    }
-
-    public void setDeptEmps(Set<DeptEmp> deptEmps) {
-        this.deptEmps = deptEmps;
-    }
 }
