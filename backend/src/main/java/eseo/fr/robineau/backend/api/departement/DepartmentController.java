@@ -97,9 +97,9 @@ public class DepartmentController {
 
     @GetMapping("/{deptNo}/employees/current")
     public ResponseEntity<List<EmployeeDto>> getDepartmentWithCurrentEmployees(@PathVariable String deptNo,
-                                                                             @RequestParam(defaultValue = "1") @Min(1) @NotNull Integer pageNo,
-                                                                             @RequestParam(defaultValue = "10") @Min(1) @NotNull Integer pageSize) {
-        List<DeptEmp> currentEmployees = deptEmpService.getCurrentDeptEmp(deptNo, pageNo - 1, pageSize);
+                                                                             @RequestParam(defaultValue = "0")Integer page,
+                                                                             @RequestParam(defaultValue = "10") Integer size) {
+        List<DeptEmp> currentEmployees = deptEmpService.getCurrentDeptEmp(deptNo, page, size);
 
         List<EmployeeDto> employeeDtos = currentEmployees.stream()
                 .map(deptEmp -> new EmployeeDto(
