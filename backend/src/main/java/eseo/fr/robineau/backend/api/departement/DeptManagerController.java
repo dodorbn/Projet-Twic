@@ -3,6 +3,8 @@ package eseo.fr.robineau.backend.api.departement;
 import eseo.fr.robineau.backend.api.employee.EmployeeDto;
 import eseo.fr.robineau.backend.service.departement.DeptManager;
 import eseo.fr.robineau.backend.service.departement.DeptManagerService;
+import eseo.fr.robineau.backend.service.salary.Salary;
+import eseo.fr.robineau.backend.service.title.Title;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +24,20 @@ public class DeptManagerController {
     @GetMapping
     public List<EmployeeDto> getDepartmentManagers(@PathVariable String deptNo) {
         return deptManagerService.getDeptManager(deptNo).stream()
-                .map(deptManager -> new EmployeeDto(
-                        deptManager.getEmployees().getId(),
-                        deptManager.getEmployees().getFirstName(),
-                        deptManager.getEmployees().getLastName(),
-                        deptManager.getEmployees().getHireDate()
+                .map(deptEmp -> new EmployeeDto(
+                        deptEmp.getEmployees().getId(),
+                        deptEmp.getEmployees().getFirstName(),
+                        deptEmp.getEmployees().getLastName(),
+                        deptEmp.getEmployees().getHireDate(),
+                        deptEmp.getDepartment().getDeptNo(), // Ajout du département
+                        deptEmp.getEmployees().getTitles().stream()
+                                .findFirst()
+                                .map(Title::getTitle)
+                                .orElse(null), // Ajout du titre
+                        deptEmp.getEmployees().getSalaries().stream()
+                                .findFirst()
+                                .map(Salary::getSalary)
+                                .orElse(null) // Ajout du salaire
                 ))
                 .collect(Collectors.toList());
     }

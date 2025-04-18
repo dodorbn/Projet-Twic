@@ -1,12 +1,12 @@
 package eseo.fr.robineau.backend.api.departement;
 
-import eseo.fr.robineau.backend.api.departement.DepartmentDto;
-import eseo.fr.robineau.backend.api.departement.DepartmentMapper;
 import eseo.fr.robineau.backend.api.employee.EmployeeDto;
 import eseo.fr.robineau.backend.service.departement.Department;
 import eseo.fr.robineau.backend.service.departement.DepartmentService;
 import eseo.fr.robineau.backend.service.departement.DeptEmp;
 import eseo.fr.robineau.backend.service.departement.DeptEmpService;
+import eseo.fr.robineau.backend.service.salary.Salary;
+import eseo.fr.robineau.backend.service.title.Title;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -106,7 +105,16 @@ public class DepartmentController {
                         deptEmp.getEmployees().getId(),
                         deptEmp.getEmployees().getFirstName(),
                         deptEmp.getEmployees().getLastName(),
-                        deptEmp.getEmployees().getHireDate()
+                        deptEmp.getEmployees().getHireDate(),
+                        deptEmp.getDepartment().getDeptNo(), // Ajout du département
+                        deptEmp.getEmployees().getTitles().stream()
+                                .findFirst()
+                                .map(Title::getTitle)
+                                .orElse(null), // Ajout du titre
+                        deptEmp.getEmployees().getSalaries().stream()
+                                .findFirst()
+                                .map(Salary::getSalary)
+                                .orElse(null) // Ajout du salaire
                 ))
                 .collect(Collectors.toList());
 

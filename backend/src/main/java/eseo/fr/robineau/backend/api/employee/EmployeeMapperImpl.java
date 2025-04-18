@@ -18,11 +18,29 @@ public class EmployeeMapperImpl implements EmployeeMapper {
         if (employees == null) {
             return null;
         }
+        String department = employees.getDeptEmps().stream()
+                .findFirst()
+                .map(deptEmp -> deptEmp.getDepartment().getDeptNo())
+                .orElse(null);
+
+        String title = employees.getTitles().stream()
+                .findFirst()
+                .map(Title::getTitle)
+                .orElse(null);
+
+        Integer salary = employees.getSalaries().stream()
+                .findFirst()
+                .map(Salary::getSalary)
+                .orElse(null);
+
         return new EmployeeDto(
                 employees.getId(),
                 employees.getFirstName(),
                 employees.getLastName(),
-                employees.getHireDate()
+                employees.getHireDate(),
+                department,
+                title,
+                salary
         );
     }
 

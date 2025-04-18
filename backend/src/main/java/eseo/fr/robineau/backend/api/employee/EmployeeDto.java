@@ -12,11 +12,19 @@ public class EmployeeDto {
     private String firstName;
     private String lastName;
     private LocalDate hireDate;
+    private String department;
+    private String title;
+    private Integer salary;
 
-    public EmployeeDto(Integer id, String firstName, String lastName, LocalDate hireDate) {
+    public EmployeeDto(Integer id, String firstName,
+                       String lastName, LocalDate hireDate,
+                       String department, String title, Integer salary) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.hireDate = hireDate;
+        this.department = department;
+        this.title = title;
+        this.salary = salary;
     }
 }
