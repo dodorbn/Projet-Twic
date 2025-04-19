@@ -15,8 +15,14 @@ const routes = [
     component: SearchView
   },
   {
-    path: '/employee/:id?',
+    path: '/employee/:id',
     name: 'employee',
+    component: EmployeeView
+  },
+
+  {
+    path: '/employee',
+    name: 'newEmployee',
     component: EmployeeView
   }
 ]

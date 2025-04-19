@@ -1,15 +1,15 @@
 <template>
   <div class="search">
-    <h1>Recherche</h1>
+    <h1>Search</h1>
 
     <div class="search-form">
       <input
         type="text"
         v-model="searchQuery"
-        placeholder="Rechercher par nom, prénom ou numéro..."
+        placeholder="Search by name, surname or id..."
         @keyup.enter="search"
       />
-      <button @click="search">Rechercher</button>
+      <button @click="search">Search</button>
     </div>
 
     <div v-if="searchDone">
@@ -20,11 +20,11 @@
       <table v-else>
         <thead>
           <tr>
-            <th>N° Employé</th>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Département</th>
-            <th>Titre</th>
+            <th>Employee N°</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Department</th>
+            <th>Position</th>
           </tr>
         </thead>
         <tbody>

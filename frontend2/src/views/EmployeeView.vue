@@ -1,6 +1,6 @@
 <template>
   <div class="employee">
-    <h2>{{ isNew ? 'Nouvel employé' : 'Détails employé' }}</h2>
+    <h2>{{ isNew ? 'New employee' : 'Employee Datas' }}</h2>
 
     <form @submit.prevent="handleSubmit" class="employee-form">
       <div class="form-group">
@@ -21,9 +21,9 @@
       <div class="form-group">
         <label>Department</label>
         <select v-model="employee.DeptNo" required>
-          <option value="">Sélectionnez un département</option>
-          <option v-for="dept in departments" :key="dept.deptNo" :value="dept.deptNo">
-            {{ dept.deptNo }} - {{ dept.deptName }}
+          <option value="">Select a department </option>
+          <option v-for="dept in sortedDepartments" :key="dept.deptNo" :value="dept.deptName">
+            {{ dept.deptName }}
           </option>
         </select>
       </div>
@@ -60,72 +60,97 @@
 </template>
 
 <script>
-import api from '@/services/api'
+import axios from 'axios'
+import { ref, computed, onMounted } from 'vue'
 
 export default {
   name: 'EmployeeView',
-  data() {
-    return {
-      employee: {
-        id: '',
-        first_name: '',
-        last_name: '',
-        DeptNo: '',
-        birth_date: '',
-        hire_date: '',
-        title: '',
-        salary: ''
-      },
-      departments: [],
-      isNew: true
-    }
-  },
-  async created() {
-    await this.loadDepartments()
-    const id = this.$route.params.id
-    if (id) {
-      this.isNew = false
-      await this.loadEmployee(id)
-    }
-  },
-  methods: {
-    async loadDepartments() {
+  setup() {
+    const employee = ref({
+      id: '',
+      first_name: '',
+      last_name: '',
+      DeptNo: '',
+      birth_date: '',
+      hire_date: '',
+      title: '',
+      salary: ''
+    })
+    const departments = ref([])
+    const isNew = ref(true)
+
+    const sortedDepartments = computed(() => {
+      return [...departments.value].sort((a, b) => a.deptName.localeCompare(b.deptName))
+    })
+
+    const fetchDepartments = async () => {
       try {
-        const response = await api.get('/api/v1/departments')
-        this.departments = response.data
+        const response = await axios.get('http://localhost:8080/api/v1/departments')
+        departments.value = response.data
       } catch (error) {
-        console.error(error)
+        console.error('Erreur lors du chargement des départements :', error)
       }
-    },
-    async loadEmployee(id) {
+    }
+
+    const loadEmployee = async (id) => {
       try {
-        const response = await api.get(`/api/v1/employees/${id}`)
-        this.employee = response.data
-      } catch (error) {
-        console.error(error)
-      }
-    },
-    async handleSubmit() {
-      try {
-        if (this.isNew) {
-          await api.post('/api/v1/employees', this.employee)
-        } else {
-          await api.put(`/api/v1/employees/${this.employee.id}`, this.employee)
+        const response = await axios.get(`http://localhost:8080/api/v1/employees/${id}`)
+        const data = response.data
+        employee.value = {
+          id: data.id,
+          first_name: data.firstName,
+          last_name: data.lastName,
+          DeptNo: data.department || '',
+          birth_date: data.birthDate,
+          hire_date: data.hireDate,
+          title: data.title || '',
+          salary: data.salary || ''
         }
-        this.$router.push('/')
+      } catch (error) {
+        console.error('Erreur lors du chargement de l\'employé :', error)
+      }
+    }
+
+    const handleSubmit = async () => {
+      try {
+        if (isNew.value) {
+          await axios.post('http://localhost:8080/api/v1/employees', employee.value)
+        } else {
+          await axios.put(`http://localhost:8080/api/v1/employees/${employee.value.id}`, employee.value)
+        }
+        window.location.href = '/'
       } catch (error) {
         console.error(error)
       }
-    },
-    async deleteEmployee() {
+    }
+
+    const deleteEmployee = async () => {
       if (confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')) {
         try {
-          await api.delete(`/api/v1/employees/${this.employee.id}`)
-          this.$router.push('/')
+          await axios.delete(`http://localhost:8080/api/v1/employees/${employee.value.id}`)
+          window.location.href = '/'
         } catch (error) {
           console.error(error)
         }
       }
+    }
+
+    onMounted(async () => {
+      await fetchDepartments()
+      const id = window.location.pathname.split('/').pop()
+      if (id) {
+        isNew.value = false
+        await loadEmployee(id)
+      }
+    })
+
+    return {
+      employee,
+      departments,
+      sortedDepartments,
+      isNew,
+      handleSubmit,
+      deleteEmployee
     }
   }
 }

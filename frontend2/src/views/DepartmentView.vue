@@ -1,9 +1,9 @@
 <template>
   <div class="departments">
-    <h2>Département</h2>
+    <h2>Department</h2>
     <!-- Liste déroulante des départements -->
     <select v-model="selectedDepartment" class="department-select">
-      <option value="">Sélectionnez un département</option>
+      <option value="">Select a department</option>
       <option v-for="dept in sortedDepartments" :key="dept.deptNo" :value="dept">
         {{ dept.deptNo }} - {{ dept.deptName }}
       </option>
@@ -13,13 +13,13 @@
     <div v-if="selectedDepartment" class="tables-container">
       <!-- Tableau du Manager -->
       <div class="manager-table">
-        <h3>Managers</h3>
+        <h3>Manager</h3>
         <table>
           <thead>
           <tr>
-            <th>Identifiant</th>
-            <th>Prénom</th>
-            <th>Nom</th>
+            <th>Employee No</th>
+            <th>First Name</th>
+            <th>Last Name</th>
           </tr>
           </thead>
             <tbody>
@@ -34,13 +34,13 @@
 
       <!-- Tableau des Employés -->
       <div class="employees-table">
-        <h3>Employés</h3>
+        <h3>Employees</h3>
         <table>
           <thead>
           <tr>
-            <th>Identifiant</th>
-            <th>Prénom</th>
-            <th>Nom</th>
+            <th>Employee No</th>
+            <th>First Name</th>
+            <th>Last Name</th>
           </tr>
           </thead>
           <tbody>
