@@ -65,4 +65,6 @@ public class EmployeeMapperImpl implements EmployeeMapper {
         employees.setHireDate(employeesRequestDto.getHire_date());
         return employees;
     }
+
+    // n'importe quoi
 }
