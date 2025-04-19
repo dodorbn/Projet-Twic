@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <router-link to="/">Départements</router-link> |
-    <router-link to="/search">Recherche</router-link> |
-    <router-link to="/employee">Nouvel Employé</router-link>
+    <router-link to="/">Departments</router-link> |
+    <router-link to="/search">Search</router-link> |
+    <router-link to="/employee">New Employee</router-link>
   </nav>
   <router-view/>
 </template>

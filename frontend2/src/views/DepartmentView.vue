@@ -131,7 +131,7 @@ export default {
 
     // Navigation vers la page de l'employé
     const goToEmployee = (empNo) => {
-      router.push(`/employees/${empNo}`)
+      router.push(`/employee/${empNo}`)
     }
 
     const currentPage = ref(0); // Page actuelle

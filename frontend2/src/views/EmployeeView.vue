@@ -21,8 +21,8 @@
       <div class="form-group">
         <label>Department</label>
         <select v-model="employee.DeptNo" required>
-          <option value="">Select a department </option>
-          <option v-for="dept in sortedDepartments" :key="dept.deptNo" :value="dept.deptName">
+          <option value="">Select a department</option>
+          <option v-for="dept in sortedDepartments" :key="dept.deptNo" :value="dept.deptNo">
             {{ dept.deptName }}
           </option>
         </select>
@@ -62,10 +62,12 @@
 <script>
 import axios from 'axios'
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'EmployeeView',
   setup() {
+    const router = useRouter()
     const employee = ref({
       id: '',
       first_name: '',
@@ -106,6 +108,7 @@ export default {
           title: data.title || '',
           salary: data.salary || ''
         }
+        console.log(data)
       } catch (error) {
         console.error('Erreur lors du chargement de l\'employé :', error)
       }
@@ -118,7 +121,7 @@ export default {
         } else {
           await axios.put(`http://localhost:8080/api/v1/employees/${employee.value.id}`, employee.value)
         }
-        window.location.href = '/'
+        router.push('/')
       } catch (error) {
         console.error(error)
       }
@@ -128,7 +131,7 @@ export default {
       if (confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')) {
         try {
           await axios.delete(`http://localhost:8080/api/v1/employees/${employee.value.id}`)
-          window.location.href = '/'
+          router.push('/')
         } catch (error) {
           console.error(error)
         }
@@ -136,11 +139,11 @@ export default {
     }
 
     onMounted(async () => {
-      await fetchDepartments()
-      const id = window.location.pathname.split('/').pop()
+      await fetchDepartments();
+      const id = router.currentRoute.value.params.id; // Récupère l'ID depuis l'URL
       if (id) {
-        isNew.value = false
-        await loadEmployee(id)
+        isNew.value = false;
+        await loadEmployee(id); // Charge les données de l'employé
       }
     })
 
@@ -149,6 +152,7 @@ export default {
       departments,
       sortedDepartments,
       isNew,
+      fetchDepartments,
       handleSubmit,
       deleteEmployee
     }
