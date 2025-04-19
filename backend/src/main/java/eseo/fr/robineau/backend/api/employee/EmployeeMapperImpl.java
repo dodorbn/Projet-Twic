@@ -1,12 +1,10 @@
 package eseo.fr.robineau.backend.api.employee;
 
-import eseo.fr.robineau.backend.service.departement.DeptEmp;
 import eseo.fr.robineau.backend.service.employee.Employee;
 import eseo.fr.robineau.backend.service.salary.Salary;
 import eseo.fr.robineau.backend.service.title.Title;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +17,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
             return null;
         }
         String department = employees.getDeptEmps().stream()
+                .filter(deptEmp -> deptEmp.getDepartment() != null)
                 .findFirst()
                 .map(deptEmp -> deptEmp.getDepartment().getDeptNo())
                 .orElse(null);
@@ -38,6 +37,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
                 employees.getFirstName(),
                 employees.getLastName(),
                 employees.getHireDate(),
+                employees.getBirthDate(),
                 department,
                 title,
                 salary

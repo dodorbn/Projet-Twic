@@ -29,7 +29,8 @@ public class DeptManagerController {
                         deptEmp.getEmployees().getFirstName(),
                         deptEmp.getEmployees().getLastName(),
                         deptEmp.getEmployees().getHireDate(),
-                        deptEmp.getDepartment().getDeptNo(), // Ajout du département
+                        deptEmp.getEmployees().getBirthDate(),
+                        deptEmp.getDepartment() != null ? deptEmp.getDepartment().getDeptNo() : null,
                         deptEmp.getEmployees().getTitles().stream()
                                 .findFirst()
                                 .map(Title::getTitle)

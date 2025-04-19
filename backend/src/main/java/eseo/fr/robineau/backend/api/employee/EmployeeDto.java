@@ -12,17 +12,20 @@ public class EmployeeDto {
     private String firstName;
     private String lastName;
     private LocalDate hireDate;
+    private LocalDate birthDate;
     private String department;
     private String title;
     private Integer salary;
 
     public EmployeeDto(Integer id, String firstName,
                        String lastName, LocalDate hireDate,
-                       String department, String title, Integer salary) {
+                       LocalDate birthDate, String department,
+                       String title, Integer salary) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.hireDate = hireDate;
+        this.birthDate = birthDate;
         this.department = department;
         this.title = title;
         this.salary = salary;

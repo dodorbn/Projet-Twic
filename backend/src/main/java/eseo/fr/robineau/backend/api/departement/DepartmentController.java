@@ -106,6 +106,7 @@ public class DepartmentController {
                         deptEmp.getEmployees().getFirstName(),
                         deptEmp.getEmployees().getLastName(),
                         deptEmp.getEmployees().getHireDate(),
+                        deptEmp.getEmployees().getBirthDate(),
                         deptEmp.getDepartment().getDeptNo(), // Ajout du département
                         deptEmp.getEmployees().getTitles().stream()
                                 .findFirst()
