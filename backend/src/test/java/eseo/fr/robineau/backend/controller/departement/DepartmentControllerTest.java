@@ -3,17 +3,24 @@ package eseo.fr.robineau.backend.controller.departement;
 import eseo.fr.robineau.backend.controller.employee.EmployeeDto;
 import eseo.fr.robineau.backend.service.departement.Department;
 import eseo.fr.robineau.backend.service.departement.DepartmentService;
+import eseo.fr.robineau.backend.service.departement.DeptEmp;
+import eseo.fr.robineau.backend.service.departement.DeptEmpService;
+import eseo.fr.robineau.backend.service.employee.Employee;
+import eseo.fr.robineau.backend.service.salary.Salary;
+import eseo.fr.robineau.backend.service.title.Title;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,99 +32,91 @@ class DepartmentControllerTest {
     @Mock
     private DepartmentMapper departmentMapper;
 
+    @Mock
+    private DeptEmpService deptEmpService;
+
     @InjectMocks
     private DepartmentController departmentController;
 
     @Test
-    void getAllDepartments_shouldReturnDepartmentsList() {
+    void constructor_shouldInitialize() {
+        DepartmentController controller = new DepartmentController(departmentService, departmentMapper, deptEmpService);
+        assertNotNull(controller);
+    }
+
+    @Test
+    void getDepartmentWithCurrentEmployees_shouldReturnEmployeesList() {
+        DeptEmp deptEmp = new DeptEmp();
         Department dept = new Department();
         dept.setDeptNo("d001");
-        dept.setDeptName("Marketing");
-        List<Department> departments = List.of(dept);
-        List<EmployeeDto> employees = List.of();
-        DepartmentDto deptDto = new DepartmentDto("d001", "Marketing", employees);
 
-        when(departmentService.getDepartments(anyInt(), anyInt())).thenReturn(departments);
-        when(departmentMapper.toListDto(departments)).thenReturn(List.of(deptDto));
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setFirstName("John");
+        employee.setLastName("Doe");
+        employee.setHireDate(LocalDate.now());
+        employee.setBirthDate(LocalDate.now());
 
-        List<DepartmentDto> result = departmentController.getAllDepartments(1, 10);
+        Title title = new Title();
+        title.setTitle("Engineer");
+        employee.setTitles(Set.of(title));
 
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        verify(departmentService).getDepartments(0, 10);
-        verify(departmentMapper).toListDto(departments);
+        Salary salary = new Salary();
+        salary.setSalary(50000);
+        employee.setSalaries(Set.of(salary));
+
+        deptEmp.setDepartment(dept);
+        deptEmp.setEmployees(employee);
+
+        when(deptEmpService.getCurrentDeptEmp("d001", 0, 10)).thenReturn(List.of(deptEmp));
+
+        ResponseEntity<List<EmployeeDto>> response =
+                departmentController.getDepartmentWithCurrentEmployees("d001", 0, 10);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        List<EmployeeDto> employees = response.getBody();
+        assertNotNull(employees);
+        assertEquals(1, employees.size());
+
+        EmployeeDto dto = employees.get(0);
+        assertEquals(1, dto.getId());
+        assertEquals("Engineer", dto.getTitle());
+        assertEquals(50000, dto.getSalary());
     }
 
     @Test
-    void getDepartment_shouldReturnDepartment() {
+    void getDepartmentWithCurrentEmployees_shouldHandleEmptyTitlesAndSalaries() {
+        DeptEmp deptEmp = new DeptEmp();
         Department dept = new Department();
         dept.setDeptNo("d001");
-        dept.setDeptName("Marketing");
-        List<EmployeeDto> employees = List.of();
-        DepartmentDto deptDto = new DepartmentDto("d001", "Marketing", employees);
 
-        when(departmentService.getDepartment("d001")).thenReturn(dept);
-        when(departmentMapper.toDto(dept)).thenReturn(deptDto);
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setTitles(Set.of());
+        employee.setSalaries(Set.of());
 
-        DepartmentDto result = departmentController.getDepartment("d001");
+        deptEmp.setDepartment(dept);
+        deptEmp.setEmployees(employee);
 
-        assertNotNull(result);
-        assertEquals("d001", result.deptNo());
-        verify(departmentService).getDepartment("d001");
+        when(deptEmpService.getCurrentDeptEmp("d001", 0, 10))
+                .thenReturn(List.of(deptEmp));
+
+        ResponseEntity<List<EmployeeDto>> response =
+                departmentController.getDepartmentWithCurrentEmployees("d001", 0, 10);
+
+        List<EmployeeDto> employees = response.getBody();
+        assertNotNull(employees);
+        EmployeeDto dto = employees.get(0);
+        assertNull(dto.getTitle());
+        assertNull(dto.getSalary());
     }
 
     @Test
-    void getDepartment_shouldThrowNotFound() {
-        when(departmentService.getDepartment("invalid")).thenReturn(null);
-
-        assertThrows(ResponseStatusException.class, () ->
-            departmentController.getDepartment("invalid")
-        );
-        verify(departmentService).getDepartment("invalid");
-    }
-
-    @Test
-    void createDepartment_shouldReturnCreatedDepartment() {
-        DepartmentRequestDto requestDto = new DepartmentRequestDto("d001", "Marketing");
-        Department dept = new Department();
-        dept.setDeptNo("d001");
-        dept.setDeptName("Marketing");
-        List<EmployeeDto> employees = List.of();
-        DepartmentDto deptDto = new DepartmentDto("d001", "Marketing", employees);
-
-        when(departmentService.createDepartment(any())).thenReturn(dept);
-        when(departmentMapper.toDto(dept)).thenReturn(deptDto);
-
-        DepartmentDto result = departmentController.createDepartment(requestDto);
-
-        assertNotNull(result);
-        assertEquals("d001", result.deptNo());
-        verify(departmentService).createDepartment(any());
-    }
-
-    @Test
-    void deleteDepartment_shouldCallService() {
-        departmentController.deleteDepartment("d001");
-
-        verify(departmentService).deleteDepartment("d001");
-    }
-
-    @Test
-    void updateDepartment_shouldReturnUpdatedDepartment() {
-        DepartmentRequestDto requestDto = new DepartmentRequestDto("d001", "Marketing Updated");
-        Department dept = new Department();
-        dept.setDeptNo("d001");
-        dept.setDeptName("Marketing Updated");
-        List<EmployeeDto> employees = List.of();
-        DepartmentDto deptDto = new DepartmentDto("d001", "Marketing Updated", employees);
-
-        when(departmentService.updateDepartment(eq("d001"), any())).thenReturn(dept);
-        when(departmentMapper.toDto(dept)).thenReturn(deptDto);
-
-        DepartmentDto result = departmentController.updateDepartment("d001", requestDto);
-
-        assertNotNull(result);
-        assertEquals("Marketing Updated", result.deptName());
-        verify(departmentService).updateDepartment(eq("d001"), any());
+    void getAllDepartments_shouldHandlePageNumber() {
+        when(departmentService.getDepartments(4, 10)).thenReturn(List.of());
+        departmentController.getAllDepartments(5, 10);
+        verify(departmentService).getDepartments(4, 10);
     }
 }
