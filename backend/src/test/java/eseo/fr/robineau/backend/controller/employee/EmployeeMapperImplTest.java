@@ -116,4 +116,27 @@ class EmployeeMapperImplTest {
         assertEquals(2, result.get(1).getId());
         assertEquals("Jane", result.get(1).getFirstName());
     }
+
+    @Test
+    void toDto_withNullDepartmentInDeptEmp_shouldReturnDtoWithNullDepartment() {
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setFirstName("John");
+        employee.setLastName("Doe");
+
+        DeptEmp deptEmpWithNullDept = new DeptEmp();
+        deptEmpWithNullDept.setDepartment(null);
+        employee.setDeptEmps(Set.of(deptEmpWithNullDept));
+
+        employee.setTitles(Set.of());
+        employee.setSalaries(Set.of());
+
+        EmployeeDto result = employeeMapper.toDto(employee);
+
+        assertNotNull(result);
+        assertEquals(1, result.getId());
+        assertEquals("John", result.getFirstName());
+        assertEquals("Doe", result.getLastName());
+        assertNull(result.getDepartment());
+    }
 }

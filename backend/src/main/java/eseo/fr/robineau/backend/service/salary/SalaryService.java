@@ -1,18 +1,10 @@
 package eseo.fr.robineau.backend.service.salary;
 
+import java.util.List;
+
 public interface SalaryService {
-
-//    Salary getSalary(SalaryId id);
-//
-//    List<Salary> getSalaryByEmployeeId(Integer empNo);
-//    List<Salary> getSalaryByEmployee(Integer empNo, Integer pageNo, Integer pageSize);
-//    List<Salary> getSalaryByEmployeeId(String employeeId);
-//
-//    Salary save(Salary salary);
-//
-//    Salary create(Salary salary);
-//
-//    void delete(SalaryId id);
-
-
+    List<Salary> getSalariesByEmployeeId(Integer empNo, Integer pageNo, Integer pageSize);
+    Salary getLatestSalaryByEmployeeId(Integer empNo);
+    Salary createSalary(Salary salary);
+    void deleteSalary(SalaryId id);
 }

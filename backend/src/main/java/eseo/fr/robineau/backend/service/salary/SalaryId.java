@@ -2,7 +2,9 @@ package eseo.fr.robineau.backend.service.salary;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
@@ -13,6 +15,8 @@ import java.util.Objects;
 @Setter
 @Getter
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 public class SalaryId implements java.io.Serializable {
     @Serial
     private static final long serialVersionUID = 2814772787990443220L;

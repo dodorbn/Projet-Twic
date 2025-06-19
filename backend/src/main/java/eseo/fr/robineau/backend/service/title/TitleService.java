@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface TitleService {
     List<Title> getTitlesByEmployee(Employee employee, Pageable pageable);
-
     Title saveTitle(Title title);
-
-    void deleteTitle(Title title);
+    void deleteTitle(TitleId titleId);
 }
