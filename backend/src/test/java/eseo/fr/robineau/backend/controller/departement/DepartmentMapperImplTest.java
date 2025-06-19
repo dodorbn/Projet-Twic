@@ -29,7 +29,6 @@ class DepartmentMapperImplTest {
 
     @Test
     void toDto_shouldMapDepartmentToDto() {
-        // Setup
         Department department = new Department();
         department.setDeptNo("d001");
         department.setDeptName("Marketing");
@@ -49,10 +48,8 @@ class DepartmentMapperImplTest {
         EmployeeDto managerDto = new EmployeeDto(1, "John", "Doe", LocalDate.now(), LocalDate.now(), null, null, null);
         when(employeeMapper.toDto(manager)).thenReturn(managerDto);
 
-        // Execution
         DepartmentDto result = departmentMapper.toDto(department);
 
-        // Verification
         assertNotNull(result);
         assertEquals("d001", result.deptNo());
         assertEquals("Marketing", result.deptName());
@@ -62,7 +59,6 @@ class DepartmentMapperImplTest {
 
     @Test
     void toListDto_shouldMapDepartmentListToDtoList() {
-        // Setup
         Department dept1 = new Department();
         dept1.setDeptNo("d001");
         dept1.setDeptName("Marketing");
@@ -75,10 +71,8 @@ class DepartmentMapperImplTest {
 
         List<Department> departments = List.of(dept1, dept2);
 
-        // Execution
         List<DepartmentDto> result = departmentMapper.toListDto(departments);
 
-        // Verification
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals("d001", result.get(0).deptNo());
@@ -89,16 +83,13 @@ class DepartmentMapperImplTest {
 
     @Test
     void toDto_shouldHandleEmptyManagersList() {
-        // Setup
         Department department = new Department();
         department.setDeptNo("d001");
         department.setDeptName("Marketing");
         department.setDeptManagers(new LinkedHashSet<>()); // Pas de managers
 
-        // Execution
         DepartmentDto result = departmentMapper.toDto(department);
 
-        // Verification
         assertNotNull(result);
         assertEquals("d001", result.deptNo());
         assertEquals("Marketing", result.deptName());

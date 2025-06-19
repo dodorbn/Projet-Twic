@@ -70,8 +70,8 @@ public class DepartmentController {
     @ResponseStatus(HttpStatus.CREATED)
     public DepartmentDto createDepartment(@RequestBody DepartmentRequestDto requestDto) {
         Department department = new Department();
-        department.setDeptNo(requestDto.getDeptNo());
-        department.setDeptName(requestDto.getDeptName());
+        department.setDeptNo(requestDto.deptNo());
+        department.setDeptName(requestDto.deptName());
         Department created = departmentService.createDepartment(department);
         return departmentMapper.toDto(created);
     }
@@ -79,8 +79,8 @@ public class DepartmentController {
     @PutMapping("/{deptNo}")
     public DepartmentDto updateDepartment(@PathVariable String deptNo, @RequestBody DepartmentRequestDto requestDto) {
         Department department = new Department();
-        department.setDeptNo(requestDto.getDeptNo());
-        department.setDeptName(requestDto.getDeptName());
+        department.setDeptNo(requestDto.deptNo());
+        department.setDeptName(requestDto.deptName());
         Department updated = departmentService.updateDepartment(deptNo, department);
         if (updated == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Department not found");

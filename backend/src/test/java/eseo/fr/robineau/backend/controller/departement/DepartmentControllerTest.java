@@ -30,7 +30,6 @@ class DepartmentControllerTest {
 
     @Test
     void getAllDepartments_shouldReturnDepartmentsList() {
-        // Setup
         Department dept = new Department();
         dept.setDeptNo("d001");
         dept.setDeptName("Marketing");
@@ -41,10 +40,8 @@ class DepartmentControllerTest {
         when(departmentService.getDepartments(anyInt(), anyInt())).thenReturn(departments);
         when(departmentMapper.toListDto(departments)).thenReturn(List.of(deptDto));
 
-        // Execution
         List<DepartmentDto> result = departmentController.getAllDepartments(1, 10);
 
-        // Verification
         assertNotNull(result);
         assertEquals(1, result.size());
         verify(departmentService).getDepartments(0, 10);
@@ -53,7 +50,6 @@ class DepartmentControllerTest {
 
     @Test
     void getDepartment_shouldReturnDepartment() {
-        // Setup
         Department dept = new Department();
         dept.setDeptNo("d001");
         dept.setDeptName("Marketing");
@@ -63,10 +59,8 @@ class DepartmentControllerTest {
         when(departmentService.getDepartment("d001")).thenReturn(dept);
         when(departmentMapper.toDto(dept)).thenReturn(deptDto);
 
-        // Execution
         DepartmentDto result = departmentController.getDepartment("d001");
 
-        // Verification
         assertNotNull(result);
         assertEquals("d001", result.deptNo());
         verify(departmentService).getDepartment("d001");
@@ -74,10 +68,8 @@ class DepartmentControllerTest {
 
     @Test
     void getDepartment_shouldThrowNotFound() {
-        // Setup
         when(departmentService.getDepartment("invalid")).thenReturn(null);
 
-        // Execution & Verification
         assertThrows(ResponseStatusException.class, () ->
             departmentController.getDepartment("invalid")
         );
@@ -86,7 +78,6 @@ class DepartmentControllerTest {
 
     @Test
     void createDepartment_shouldReturnCreatedDepartment() {
-        // Setup
         DepartmentRequestDto requestDto = new DepartmentRequestDto("d001", "Marketing");
         Department dept = new Department();
         dept.setDeptNo("d001");
@@ -97,10 +88,8 @@ class DepartmentControllerTest {
         when(departmentService.createDepartment(any())).thenReturn(dept);
         when(departmentMapper.toDto(dept)).thenReturn(deptDto);
 
-        // Execution
         DepartmentDto result = departmentController.createDepartment(requestDto);
 
-        // Verification
         assertNotNull(result);
         assertEquals("d001", result.deptNo());
         verify(departmentService).createDepartment(any());
@@ -108,16 +97,13 @@ class DepartmentControllerTest {
 
     @Test
     void deleteDepartment_shouldCallService() {
-        // Execution
         departmentController.deleteDepartment("d001");
 
-        // Verification
         verify(departmentService).deleteDepartment("d001");
     }
 
     @Test
     void updateDepartment_shouldReturnUpdatedDepartment() {
-        // Setup
         DepartmentRequestDto requestDto = new DepartmentRequestDto("d001", "Marketing Updated");
         Department dept = new Department();
         dept.setDeptNo("d001");
@@ -128,10 +114,8 @@ class DepartmentControllerTest {
         when(departmentService.updateDepartment(eq("d001"), any())).thenReturn(dept);
         when(departmentMapper.toDto(dept)).thenReturn(deptDto);
 
-        // Execution
         DepartmentDto result = departmentController.updateDepartment("d001", requestDto);
 
-        // Verification
         assertNotNull(result);
         assertEquals("Marketing Updated", result.deptName());
         verify(departmentService).updateDepartment(eq("d001"), any());
