@@ -1,0 +1,5 @@
+### Get Pokemon by ID
+GET http://localhost:8081/external/pokemon/pikachu
+
+#### Get Pokemon by name
+GET http://localhost:8081/external/pokemon/1
