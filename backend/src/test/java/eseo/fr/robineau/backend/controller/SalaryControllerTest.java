@@ -88,6 +88,32 @@ class SalaryControllerTest {
     }
 
     @Test
+    void createSalary_withNullSalaryId_shouldSetDefaultId() {
+        Integer empNo = 1;
+        Employee employee = new Employee();
+        employee.setId(empNo);
+
+        Salary newSalary = new Salary();
+        newSalary.setSalary(60000);
+        newSalary.setId(null);
+
+        when(employeeService.getEmployeeById(empNo)).thenReturn(Optional.of(employee));
+        when(salaryService.createSalary(any(Salary.class))).thenAnswer(invocation -> {
+            Salary savedSalary = invocation.getArgument(0);
+
+            assertNotNull(savedSalary.getId());
+            assertEquals(empNo, savedSalary.getId().getEmpNo());
+            assertNotNull(savedSalary.getId().getFromDate());
+            return savedSalary;
+        });
+        Salary result = salaryController.createSalary(empNo, newSalary);
+
+        assertNotNull(result);
+        verify(employeeService).getEmployeeById(empNo);
+        verify(salaryService).createSalary(any(Salary.class));
+    }
+
+    @Test
     void deleteSalary_shouldDeleteSalary() {
         LocalDate fromDate = LocalDate.now();
         SalaryId salaryId = new SalaryId(1, fromDate);
