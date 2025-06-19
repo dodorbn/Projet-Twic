@@ -1,4 +1,4 @@
-package eseo.fr.robineau.backend.api.employee;
+package eseo.fr.robineau.backend.controller.employee;
 
 import eseo.fr.robineau.backend.service.employee.Employee;
 import eseo.fr.robineau.backend.service.employee.EmployeeService;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/employees")
@@ -61,9 +60,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    public List<EmployeeDto> searchEmployees(@RequestParam String query,
-                                          @RequestParam(defaultValue = "0") int page,
-                                          @RequestParam(defaultValue = "10") int size) {
+    public List<EmployeeDto> searchEmployees(@RequestParam String query) {
         List<Employee> employee = employeeService.searchEmployees(query);
         return employeeMapper.toListDto(employee);
     }

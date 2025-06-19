@@ -1,4 +1,4 @@
-package eseo.fr.robineau.backend.api.employee;
+package eseo.fr.robineau.backend.controller.employee;
 
 import lombok.Getter;
 import lombok.Setter;

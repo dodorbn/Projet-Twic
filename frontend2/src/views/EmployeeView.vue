@@ -116,10 +116,20 @@ export default {
 
     const handleSubmit = async () => {
       try {
+        const payload = {
+          id: employee.value.id,
+          firstName: employee.value.first_name,
+          lastName: employee.value.last_name,
+          department: employee.value.DeptNo,
+          birthDate: employee.value.birth_date,
+          hireDate: employee.value.hire_date,
+          title: employee.value.title,
+          salary: employee.value.salary
+        };
         if (isNew.value) {
-          await axios.post('http://localhost:8080/api/v1/employees', employee.value)
+          await axios.post('http://localhost:8080/api/v1/employees', payload)
         } else {
-          await axios.put(`http://localhost:8080/api/v1/employees/${employee.value.id}`, employee.value)
+          await axios.put(`http://localhost:8080/api/v1/employees/${employee.value.id}`, payload)
         }
         router.push('/')
       } catch (error) {
@@ -161,54 +171,106 @@ export default {
 </script>
 
 <style scoped>
-.employee-form {
+.employee {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(60, 60, 60, 0.06);
+  padding: 28px 20px;
+  margin: 32px auto;
   max-width: 600px;
+  border: 1px solid #e6e8ec;
+}
+
+h2 {
+  color: #222;
+  margin-bottom: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.employee-form {
+  max-width: 500px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+  margin-bottom: 7px;
+  font-weight: 600;
+  color: #222;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  background: #f9fafb;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border: 1.5px solid #7bb7fa;
+  outline: none;
+  background: #fff;
 }
 
 .button-group {
-  margin-top: 20px;
+  margin-top: 22px;
+  display: flex;
+  gap: 14px;
+  justify-content: center;
 }
 
 button {
-  padding: 8px 16px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 4px;
+  background: #f7f9fb;
+  color: #222;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  padding: 9px 22px;
+  font-weight: 500;
   cursor: pointer;
+  transition: background 0.18s, border 0.18s, color 0.18s;
+  box-shadow: none;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background: #e6f0fa;
+  border: 1.5px solid #7bb7fa;
+  color: #1976d2;
 }
 
 .create {
-  background-color: #4CAF50;
-  color: white;
+  /* même style que les autres boutons pour l'harmonie */
 }
 
 .modify {
-  background-color: #2196F3;
-  color: white;
+  /* même style que les autres boutons pour l'harmonie */
 }
 
 .delete {
-  background-color: #f44336;
-  color: white;
+  background: #fff0f0;
+  color: #d32f2f;
+  border: 1px solid #f44336;
+}
+
+.delete:hover:not(:disabled) {
+  background: #fbe9e9;
+  border: 1.5px solid #d32f2f;
+  color: #b71c1c;
 }
 </style>

@@ -1,20 +1,20 @@
 ### Get all departments (paginated)
-GET http://localhost:8080/api/v1/departments
+GET http://localhost:8081/api/v1/departments
 
 ### Get department by ID
-GET http://localhost:8080/api/v1/departments/d007
+GET http://localhost:8081/api/v1/departments/d007
 
 #### Get department by name
-#GET http://localhost:8080/api/v1/departments/name/Marketing
+#GET http://localhost:8081/api/v1/departments/name/Marketing
 
 ### Get department by ID with employees
-http://localhost:8080/api/v1/departments/d008/employees/current
+http://localhost:8081/api/v1/departments/d008/employees/current
 
 ### Get department by ID with managers
-http://localhost:8080/api/v1/departments/d009/managers
+http://localhost:8081/api/v1/departments/d009/managers
 
 ### Create new department
-POST http://localhost:8080/api/v1/departments
+POST http://localhost:8081/api/v1/departments
 Content-Type: application/json
 
 {
@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 ### Update department
-PUT http://localhost:8080/api/v1/departments/d010
+PUT http://localhost:8081/api/v1/departments/d010
 Content-Type: application/json
 
 {
@@ -32,4 +32,4 @@ Content-Type: application/json
 }
 
 ### Delete department
-DELETE http://localhost:8080/api/v1/departments/d010
+DELETE http://localhost:8081/api/v1/departments/d010

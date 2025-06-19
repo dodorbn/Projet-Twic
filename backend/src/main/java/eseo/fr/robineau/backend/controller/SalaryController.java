@@ -1,10 +1,6 @@
-package eseo.fr.robineau.backend.api;
+package eseo.fr.robineau.backend.controller;
 
-import eseo.fr.robineau.backend.service.*;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/employees/{empNo}/salaries")

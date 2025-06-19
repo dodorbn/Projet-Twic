@@ -1,5 +1,8 @@
-package eseo.fr.robineau.backend.api.departement;
+package eseo.fr.robineau.backend.controller.departement;
 
+import lombok.Getter;
+
+@Getter
 public class DepartmentRequestDto {
   private final String deptNo;
   private final String deptName;
@@ -7,14 +10,6 @@ public class DepartmentRequestDto {
   public DepartmentRequestDto(String deptNo, String deptName) {
     this.deptNo = deptNo;
     this.deptName = deptName;
-  }
-
-  public String getDeptNo() {
-    return deptNo;
-  }
-
-  public String getDeptName() {
-    return deptName;
   }
 
 }

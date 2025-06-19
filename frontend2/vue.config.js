@@ -1,4 +1,7 @@
 module.exports = {
+  configureWebpack: {
+    entry: './src/main.js'
+  },
   devServer: {
     port: 8081,
     proxy: {

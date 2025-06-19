@@ -1,4 +1,4 @@
-package eseo.fr.robineau.backend.api.employee;
+package eseo.fr.robineau.backend.controller.employee;
 
 import eseo.fr.robineau.backend.service.employee.Employee;
 
@@ -9,6 +9,4 @@ public interface EmployeeMapper {
     EmployeeDto toDto(Employee employee);
 
     List<EmployeeDto> toListDto(List<Employee> employeeList);
-
-    Employee toEntity(EmployeeRequestDto employeeRequestDto);
 }

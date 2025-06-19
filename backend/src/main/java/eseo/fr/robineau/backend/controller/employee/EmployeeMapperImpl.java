@@ -1,4 +1,4 @@
-package eseo.fr.robineau.backend.api.employee;
+package eseo.fr.robineau.backend.controller.employee;
 
 import eseo.fr.robineau.backend.service.employee.Employee;
 import eseo.fr.robineau.backend.service.salary.Salary;
@@ -55,16 +55,4 @@ public class EmployeeMapperImpl implements EmployeeMapper {
         }
         return result;
     }
-
-    @Override
-    public Employee toEntity(EmployeeRequestDto employeesRequestDto) {
-        Employee employees = new Employee();
-        employees.setBirthDate(employeesRequestDto.getBirth_date());
-        employees.setFirstName(employeesRequestDto.getFirst_name());
-        employees.setLastName(employeesRequestDto.getLast_name());
-        employees.setHireDate(employeesRequestDto.getHire_date());
-        return employees;
-    }
-
-    // n'importe quoi
 }

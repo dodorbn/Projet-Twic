@@ -1,16 +1,20 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:8080/api/v1', // adapte le port et le chemin si nécessaire
+    baseURL: 'http://localhost:8081/api/v1', // adapte le port et le chemin si nécessaire
     headers: {
         'Content-Type': 'application/json'
     }
 });
 
 // Requête pour la recherche d'employés
-export const searchEmployees = async (query) => {
+export const searchEmployees = async (query,  page = 0, size = 20) => {
     const response = await apiClient.get(`/employees/search`, {
-        params: { query }
+        params: { 
+            query,
+            page,
+            size
+        }
     });
     return response.data;
 };
@@ -31,5 +35,3 @@ export default {
     getEmployeeById,
     getDepartments
 };
-
-// etc...

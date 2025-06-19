@@ -1,6 +1,5 @@
-package eseo.fr.robineau.backend.api.departement;
+package eseo.fr.robineau.backend.controller.departement;
 
-import eseo.fr.robineau.backend.api.departement.DepartmentDto;
 import eseo.fr.robineau.backend.service.departement.Department;
 import java.util.List;
 
