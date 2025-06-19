@@ -175,6 +175,20 @@ class DepartmentControllerTest {
     }
 
     @Test
+    void updateDepartment_shouldThrowNotFoundWhenUpdatedIsNull() {
+        DepartmentRequestDto requestDto = new DepartmentRequestDto("d001", "Marketing");
+        when(departmentService.updateDepartment(eq("d001"), any())).thenReturn(null);
+
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,
+                () -> departmentController.updateDepartment("d001", requestDto)
+        );
+
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+        assertEquals("Department not found", exception.getReason());
+    }
+
+    @Test
     void deleteDepartment_shouldDeleteDepartment() {
         departmentController.deleteDepartment("d001");
         verify(departmentService).deleteDepartment("d001");

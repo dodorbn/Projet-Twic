@@ -31,6 +31,33 @@ class DeptEmpControllerTest {
     @InjectMocks
     private DeptEmpController deptEmpController;
 
+    private DeptEmp createDeptEmp() {
+        Department department = new Department();
+        department.setDeptNo("d001");
+        department.setDeptName("Marketing");
+
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setFirstName("John");
+        employee.setLastName("Doe");
+        employee.setBirthDate(LocalDate.now().minusYears(30));
+        employee.setHireDate(LocalDate.now().minusYears(5));
+
+        Title title = new Title();
+        title.setTitle("Engineer");
+        employee.setTitles(Set.of(title));
+
+        Salary salary = new Salary();
+        salary.setSalary(50000);
+        employee.setSalaries(Set.of(salary));
+
+        DeptEmp deptEmp = new DeptEmp();
+        deptEmp.setDepartment(department);
+        deptEmp.setEmployees(employee);
+
+        return deptEmp;
+    }
+
     @Test
     void getDepartmentEmployees_shouldReturnListOfDeptEmp() {
         DeptEmp deptEmp = createDeptEmp();
@@ -63,30 +90,33 @@ class DeptEmpControllerTest {
         verify(deptEmpService).getCurrentDeptEmp("d001", 0, 20);
     }
 
-    private DeptEmp createDeptEmp() {
-        Department department = new Department();
-        department.setDeptNo("d001");
-        department.setDeptName("Marketing");
-
+    @Test
+    void getCurrentDepartmentEmployees_shouldHandleNullDepartment() {
+        DeptEmp deptEmp = new DeptEmp();
         Employee employee = new Employee();
         employee.setId(1);
         employee.setFirstName("John");
         employee.setLastName("Doe");
-        employee.setBirthDate(LocalDate.now().minusYears(30));
-        employee.setHireDate(LocalDate.now().minusYears(5));
+        employee.setTitles(Set.of());
+        employee.setSalaries(Set.of());
 
-        Title title = new Title();
-        title.setTitle("Engineer");
-        employee.setTitles(Set.of(title));
-
-        Salary salary = new Salary();
-        salary.setSalary(50000);
-        employee.setSalaries(Set.of(salary));
-
-        DeptEmp deptEmp = new DeptEmp();
-        deptEmp.setDepartment(department);
+        deptEmp.setDepartment(null);
         deptEmp.setEmployees(employee);
 
-        return deptEmp;
+        when(deptEmpService.getCurrentDeptEmp("d001", 0, 10)).thenReturn(List.of(deptEmp));
+
+        List<EmployeeDto> result = deptEmpController.getCurrentDepartmentEmployees("d001", 0, 10);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+
+        EmployeeDto dto = result.get(0);
+        assertNotNull(dto);
+        assertNull(dto.getDepartment());
+        assertEquals(1, dto.getId());
+        assertEquals("John", dto.getFirstName());
+        assertEquals("Doe", dto.getLastName());
+        assertNull(dto.getTitle());
+        assertNull(dto.getSalary());
     }
 }
