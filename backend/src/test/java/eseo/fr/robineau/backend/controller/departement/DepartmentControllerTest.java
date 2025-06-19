@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -118,5 +119,64 @@ class DepartmentControllerTest {
         when(departmentService.getDepartments(4, 10)).thenReturn(List.of());
         departmentController.getAllDepartments(5, 10);
         verify(departmentService).getDepartments(4, 10);
+    }
+
+    @Test
+    void getDepartment_shouldReturnDepartment() {
+        Department department = new Department();
+        department.setDeptNo("d001");
+        when(departmentService.getDepartment("d001")).thenReturn(department);
+        when(departmentMapper.toDto(department)).thenReturn(new DepartmentDto("d001", "Marketing", List.of()));
+
+        DepartmentDto result = departmentController.getDepartment("d001");
+
+        assertNotNull(result);
+        verify(departmentService).getDepartment("d001");
+        verify(departmentMapper).toDto(department);
+    }
+
+    @Test
+    void getDepartment_shouldThrowNotFound() {
+        when(departmentService.getDepartment("d001")).thenReturn(null);
+
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,
+                () -> departmentController.getDepartment("d001")
+        );
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    }
+
+    @Test
+    void createDepartment_shouldCreateAndReturnDepartment() {
+        DepartmentRequestDto requestDto = new DepartmentRequestDto("d001", "Marketing");
+        Department department = new Department();
+        when(departmentService.createDepartment(any())).thenReturn(department);
+        when(departmentMapper.toDto(department)).thenReturn(new DepartmentDto("d001", "Marketing", List.of()));
+
+        DepartmentDto result = departmentController.createDepartment(requestDto);
+
+        assertNotNull(result);
+        verify(departmentService).createDepartment(any());
+        verify(departmentMapper).toDto(department);
+    }
+
+    @Test
+    void updateDepartment_shouldUpdateAndReturnDepartment() {
+        DepartmentRequestDto requestDto = new DepartmentRequestDto("d001", "Marketing");
+        Department department = new Department();
+        when(departmentService.updateDepartment(eq("d001"), any())).thenReturn(department);
+        when(departmentMapper.toDto(department)).thenReturn(new DepartmentDto("d001", "Marketing", List.of()));
+
+        DepartmentDto result = departmentController.updateDepartment("d001", requestDto);
+
+        assertNotNull(result);
+        verify(departmentService).updateDepartment(eq("d001"), any());
+        verify(departmentMapper).toDto(department);
+    }
+
+    @Test
+    void deleteDepartment_shouldDeleteDepartment() {
+        departmentController.deleteDepartment("d001");
+        verify(departmentService).deleteDepartment("d001");
     }
 }
