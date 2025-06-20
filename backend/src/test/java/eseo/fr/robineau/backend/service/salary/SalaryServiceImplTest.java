@@ -125,7 +125,7 @@ class SalaryServiceImplTest {
     void deleteSalary_notFound() {
         when(salaryRepository.existsById(salaryId)).thenReturn(false);
 
-        assertThrows(Error.class, () -> salaryService.deleteSalary(salaryId));
+        assertThrows(IllegalArgumentException.class, () -> salaryService.deleteSalary(salaryId));
         verify(salaryRepository).existsById(salaryId);
         verify(salaryRepository, never()).deleteById(any());
     }
