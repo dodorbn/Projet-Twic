@@ -98,19 +98,16 @@ class SalaryControllerTest {
         newSalary.setId(null);
 
         when(employeeService.getEmployeeById(empNo)).thenReturn(Optional.of(employee));
-        when(salaryService.createSalary(any(Salary.class))).thenAnswer(invocation -> {
-            Salary savedSalary = invocation.getArgument(0);
+        when(salaryService.createSalary(any())).thenReturn(newSalary);
 
-            assertNotNull(savedSalary.getId());
-            assertEquals(empNo, savedSalary.getId().getEmpNo());
-            assertNotNull(savedSalary.getId().getFromDate());
-            return savedSalary;
-        });
-        Salary result = salaryController.createSalary(empNo, newSalary);
+        salaryController.createSalary(empNo, newSalary);
 
-        assertNotNull(result);
-        verify(employeeService).getEmployeeById(empNo);
-        verify(salaryService).createSalary(any(Salary.class));
+        verify(salaryService).createSalary(argThat(salary ->
+                salary.getId() != null &&
+                        salary.getId().getEmpNo().equals(empNo) &&
+                        salary.getId().getFromDate() != null &&
+                        salary.getEmployees().equals(employee)
+        ));
     }
 
     @Test
