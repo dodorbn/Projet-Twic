@@ -45,7 +45,7 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public void deleteSalary(SalaryId id) {
         if (!salaryRepository.existsById(id)) {
-            throw new Error("Salary not found");
+            throw new IllegalArgumentException("Salary not found");
         }
         salaryRepository.deleteById(id);
     }
