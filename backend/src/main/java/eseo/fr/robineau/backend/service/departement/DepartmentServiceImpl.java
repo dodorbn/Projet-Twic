@@ -30,11 +30,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentRepository.findByDeptName(deptName);
     }
 
-//    @Override
-//    public List<Department> searchDepartments(String query) {
-//        return departmentRepository.findByDeptNameContainingIgnoreCase(query);
-//    }
-
     @Override
     public Department createDepartment(Department department) {
         return departmentRepository.save(department);

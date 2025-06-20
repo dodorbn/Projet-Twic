@@ -65,12 +65,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         try {
             Integer empNo = Integer.parseInt(query);
-            // Si c'est un nombre, cherche par ID OU nom
             return employeeRepository.findByIdOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(
                     empNo, query, query
             );
         } catch (NumberFormatException e) {
-            // Si ce n’est pas un nombre, cherche uniquement par prénom/nom
             return employeeRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(query, query);
         }
     }

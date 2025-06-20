@@ -51,21 +51,6 @@ public class DepartmentController {
         return departmentMapper.toDto(department);
     }
 
-//    @GetMapping("name/{deptName}")
-//    public DepartmentDto getDepartmentByName(@PathVariable String deptName) {
-//        Department department = departmentService.getDepartmentByName(deptName);
-//        if (department == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Department not found");
-//        }
-//        return departmentMapper.toDto(department);
-//    }
-
-//    @GetMapping("/search")
-//    public List<DepartmentDto> searchDepartments(@RequestParam String query) {
-//        List<Department> departments = departmentService.searchDepartments(query);
-//        return departmentMapper.toListDto(departments);
-//    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public DepartmentDto createDepartment(@RequestBody DepartmentRequestDto requestDto) {
